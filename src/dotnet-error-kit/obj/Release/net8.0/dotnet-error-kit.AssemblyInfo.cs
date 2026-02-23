@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Structured error handling framework for .NET with RFC 7807 Problem Details.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12e2328bfe7b61271269b8066b172dd03b3d4780")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c2a0b1a1db82619a9b970b4423e14fcbb0f4df7e")]
 [assembly: System.Reflection.AssemblyProductAttribute("dotnet-error-kit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("dotnet-error-kit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

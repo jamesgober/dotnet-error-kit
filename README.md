@@ -48,9 +48,19 @@ public Result<User> GetUser(string id)
 }
 ```
 
+## Getting Started
+
+- **Define error codes** and register them with `services.AddErrorKit(...)`.
+- **Return typed results** for predictable error handling.
+- **Publish errors** to observers for logging or telemetry.
+- **Map to RFC 7807** Problem Details when returning API responses.
+
+See **[Getting Started](./docs/GETTING-STARTED.md)** for full walkthroughs.
+
 ## Documentation
 
 - **[API Reference](./docs/API.md)** — Full API documentation and examples
+- **[Getting Started](./docs/GETTING-STARTED.md)** — Setup guide and common workflows
 
 ## Contributing
 

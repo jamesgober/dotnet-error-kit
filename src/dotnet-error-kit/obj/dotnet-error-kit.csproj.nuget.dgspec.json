@@ -5,7 +5,7 @@
   },
   "projects": {
     "C:\\Dev\\libs\\dotnet\\dotnet-error-kit\\src\\dotnet-error-kit\\dotnet-error-kit.csproj": {
-      "version": "0.1.0",
+      "version": "1.0.0",
       "restore": {
         "projectUniqueName": "C:\\Dev\\libs\\dotnet\\dotnet-error-kit\\src\\dotnet-error-kit\\dotnet-error-kit.csproj",
         "projectName": "JG.ErrorKit",

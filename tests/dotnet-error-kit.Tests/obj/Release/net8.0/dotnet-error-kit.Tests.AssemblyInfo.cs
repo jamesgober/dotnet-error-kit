@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("dotnet-error-kit.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+99c23298468cd47499489e81a822a45477f0c965")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca5bd79420b51640aefa8ac00cd14a222e982fe3")]
 [assembly: System.Reflection.AssemblyProductAttribute("dotnet-error-kit.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("dotnet-error-kit.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- _No changes yet._
+
+## [1.0.0]
+
 ### Added
 - Core error abstractions, error codes, registry, result types, exception bridge, and RFC 7807 Problem Details model.
 - Dependency injection registration with options-based configuration.
@@ -20,8 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unit tests covering core error kit behavior.
 - Benchmark project for hot-path validation.
 - Edge case tests and documentation updates for validation and async cancellation.
+- Getting started guide and expanded README examples.
 
 ### Changed
 - CI workflow now validates packaging with `dotnet pack`.
 
-[Unreleased]: https://github.com/jamesgober/dotnet-error-kit/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/jamesgober/dotnet-error-kit/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/jamesgober/dotnet-error-kit/compare/v0.1.0...v1.0.0

@@ -9,8 +9,8 @@
       "dotnet-error-kit.Benchmarks/1.0.0": {
         "dependencies": {
           "BenchmarkDotNet": "0.13.12",
-          "JG.ErrorKit": "0.1.0",
-          "dotnet-error-kit": "0.1.0.0"
+          "JG.ErrorKit": "1.0.0",
+          "dotnet-error-kit": "1.0.0.0"
         },
         "runtime": {
           "dotnet-error-kit.Benchmarks.dll": {}
@@ -397,23 +397,23 @@
           }
         }
       },
-      "JG.ErrorKit/0.1.0": {
+      "JG.ErrorKit/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
           "Microsoft.Extensions.Options": "8.0.2"
         },
         "runtime": {
           "dotnet-error-kit.dll": {
-            "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.0.0"
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
-      "dotnet-error-kit/0.1.0.0": {
+      "dotnet-error-kit/1.0.0.0": {
         "runtime": {
           "dotnet-error-kit.dll": {
-            "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.0.0"
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       }
@@ -586,12 +586,12 @@
       "path": "system.management/5.0.0",
       "hashPath": "system.management.5.0.0.nupkg.sha512"
     },
-    "JG.ErrorKit/0.1.0": {
+    "JG.ErrorKit/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "dotnet-error-kit/0.1.0.0": {
+    "dotnet-error-kit/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

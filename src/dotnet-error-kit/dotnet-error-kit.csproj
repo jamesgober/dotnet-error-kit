@@ -12,7 +12,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
     <PackageId>JG.ErrorKit</PackageId>
-    <Version>0.1.0</Version>
+    <Version>1.0.0</Version>
     <Authors>James Gober</Authors>
     <Description>Structured error handling framework for .NET with RFC 7807 Problem Details.</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>

@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/dotnet-error-kit/dotnet-error-kit.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/dotnet-error-kit.Tests/dotnet-error-kit.Tests.csproj" />
+    <Project Path="tests/dotnet-error-kit.Benchmarks/dotnet-error-kit.Benchmarks.csproj" />
+  </Folder>
+</Solution>

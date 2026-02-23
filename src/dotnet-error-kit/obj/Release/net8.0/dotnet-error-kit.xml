@@ -1,0 +1,959 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>dotnet-error-kit</name>
+    </assembly>
+    <members>
+        <member name="T:DotNetErrorKit.Abstractions.ErrorSeverity">
+            <summary>
+            Defines the severity of an error.
+            </summary>
+        </member>
+        <member name="F:DotNetErrorKit.Abstractions.ErrorSeverity.Info">
+            <summary>
+            Informational event that does not indicate a failure.
+            </summary>
+        </member>
+        <member name="F:DotNetErrorKit.Abstractions.ErrorSeverity.Warning">
+            <summary>
+            Indicates a recoverable condition that requires attention.
+            </summary>
+        </member>
+        <member name="F:DotNetErrorKit.Abstractions.ErrorSeverity.Error">
+            <summary>
+            Indicates a failure that should be handled by the caller.
+            </summary>
+        </member>
+        <member name="F:DotNetErrorKit.Abstractions.ErrorSeverity.Critical">
+            <summary>
+            Indicates a critical failure that impacts stability or availability.
+            </summary>
+        </member>
+        <member name="F:DotNetErrorKit.Abstractions.ErrorSeverity.Fatal">
+            <summary>
+            Indicates a fatal failure that prevents continued operation.
+            </summary>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IAsyncErrorFactory">
+            <summary>
+            Creates errors asynchronously with validated inputs.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IAsyncErrorFactory.CreateAsync(DotNetErrorKit.Abstractions.IErrorCode,System.String,DotNetErrorKit.Abstractions.IError,System.Collections.Generic.IReadOnlyList{DotNetErrorKit.Abstractions.IErrorContext},System.Threading.CancellationToken)">
+            <summary>
+            Creates a new error instance asynchronously.
+            </summary>
+            <param name="code">The error code metadata.</param>
+            <param name="message">The error message override.</param>
+            <param name="innerError">An optional inner error.</param>
+            <param name="context">Optional context entries.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The created error.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="code"/> is null.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IAsyncErrorObserver">
+            <summary>
+            Defines an asynchronous observer that is notified when errors are published.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IAsyncErrorObserver.OnErrorAsync(DotNetErrorKit.Abstractions.IError,System.Threading.CancellationToken)">
+            <summary>
+            Handles an error notification asynchronously.
+            </summary>
+            <param name="errorInfo">The error being published.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A task that completes when the observer finishes handling the error.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="errorInfo"/> is null.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IAsyncErrorRegistry">
+            <summary>
+            Provides asynchronous access to an error code registry.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IAsyncErrorRegistry.Count">
+            <summary>
+            Gets the number of registered error codes.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IAsyncErrorRegistry.TryRegisterAsync(DotNetErrorKit.Abstractions.IErrorCode,System.Threading.CancellationToken)">
+            <summary>
+            Registers a new error code asynchronously.
+            </summary>
+            <param name="errorCode">The error code to register.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns><c>true</c> when the error code was registered; otherwise, <c>false</c>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="errorCode"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IAsyncErrorRegistry.TryGetAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Attempts to get a registered error code by value asynchronously.
+            </summary>
+            <param name="code">The error code value.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The resolved error code, or <c>null</c> when not found.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="code"/> is null or whitespace.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IError">
+            <summary>
+            Represents a typed error with context and severity metadata.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IError.Code">
+            <summary>
+            Gets the error code metadata.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IError.Message">
+            <summary>
+            Gets the message for the error.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IError.Severity">
+            <summary>
+            Gets the severity level for the error.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IError.Context">
+            <summary>
+            Gets the context entries associated with the error.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IError.Metadata">
+            <summary>
+            Gets the structured metadata payload for the error.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IError.InnerError">
+            <summary>
+            Gets the inner error that caused this error, if any.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IError.Timestamp">
+            <summary>
+            Gets the timestamp when the error was created.
+            </summary>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IErrorCode">
+            <summary>
+            Represents a unique error code and its metadata.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IErrorCode.Value">
+            <summary>
+            Gets the unique error code value.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IErrorCode.Description">
+            <summary>
+            Gets the human-readable description for the error.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IErrorCode.Severity">
+            <summary>
+            Gets the severity of the error.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IErrorCode.Category">
+            <summary>
+            Gets the optional category for the error code.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IErrorCode.DocumentationUri">
+            <summary>
+            Gets the optional documentation URI for the error code.
+            </summary>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IErrorContext">
+            <summary>
+            Represents a key/value context entry attached to an error.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IErrorContext.Key">
+            <summary>
+            Gets the context key.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IErrorContext.Value">
+            <summary>
+            Gets the context value.
+            </summary>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IErrorExceptionBridge">
+            <summary>
+            Bridges between typed errors and exceptions.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorExceptionBridge.ToException(DotNetErrorKit.Abstractions.IError)">
+            <summary>
+            Creates an exception from a typed error.
+            </summary>
+            <param name="errorInfo">The error to wrap.</param>
+            <returns>The created exception.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="errorInfo"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorExceptionBridge.TryGetError(System.Exception,DotNetErrorKit.Abstractions.IError@)">
+            <summary>
+            Attempts to extract a typed error from an exception.
+            </summary>
+            <param name="exception">The exception to inspect.</param>
+            <param name="errorInfo">The extracted error.</param>
+            <returns><c>true</c> if an error was extracted; otherwise, <c>false</c>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="exception"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorExceptionBridge.FromException(System.Exception)">
+            <summary>
+            Converts an exception into a typed error.
+            </summary>
+            <param name="exception">The exception to convert.</param>
+            <returns>The converted error.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="exception"/> is null.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IErrorFactory">
+            <summary>
+            Creates errors with validated inputs.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorFactory.Create(DotNetErrorKit.Abstractions.IErrorCode,System.String,DotNetErrorKit.Abstractions.IError,System.Collections.Generic.IReadOnlyList{DotNetErrorKit.Abstractions.IErrorContext})">
+            <summary>
+            Creates a new error instance.
+            </summary>
+            <param name="code">The error code metadata.</param>
+            <param name="message">The error message override.</param>
+            <param name="innerError">An optional inner error.</param>
+            <param name="context">Optional context entries.</param>
+            <returns>The created error.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="code"/> is null.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IErrorHub">
+            <summary>
+            Publishes errors to registered observers.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IErrorHub.ObserverCount">
+            <summary>
+            Gets the current number of observers.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IErrorHub.AsyncObserverCount">
+            <summary>
+            Gets the current number of asynchronous observers.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorHub.RegisterObserver(DotNetErrorKit.Abstractions.IErrorObserver)">
+            <summary>
+            Registers an observer to receive error notifications.
+            </summary>
+            <param name="observer">The observer to register.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="observer"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorHub.RegisterAsyncObserver(DotNetErrorKit.Abstractions.IAsyncErrorObserver)">
+            <summary>
+            Registers an asynchronous observer to receive error notifications.
+            </summary>
+            <param name="observer">The observer to register.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="observer"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorHub.UnregisterObserver(DotNetErrorKit.Abstractions.IErrorObserver)">
+            <summary>
+            Unregisters an observer from receiving error notifications.
+            </summary>
+            <param name="observer">The observer to unregister.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="observer"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorHub.UnregisterAsyncObserver(DotNetErrorKit.Abstractions.IAsyncErrorObserver)">
+            <summary>
+            Unregisters an asynchronous observer from receiving error notifications.
+            </summary>
+            <param name="observer">The observer to unregister.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="observer"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorHub.Publish(DotNetErrorKit.Abstractions.IError)">
+            <summary>
+            Publishes an error to all registered observers.
+            </summary>
+            <param name="errorInfo">The error to publish.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="errorInfo"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorHub.PublishAsync(DotNetErrorKit.Abstractions.IError,System.Threading.CancellationToken)">
+            <summary>
+            Publishes an error to all registered asynchronous observers.
+            </summary>
+            <param name="errorInfo">The error to publish.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A task that completes when observers finish handling the error.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="errorInfo"/> is null.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IErrorObserver">
+            <summary>
+            Defines an observer that is notified when errors are published.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorObserver.OnError(DotNetErrorKit.Abstractions.IError)">
+            <summary>
+            Handles an error notification.
+            </summary>
+            <param name="errorInfo">The error being published.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="errorInfo"/> is null.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IErrorRegistry">
+            <summary>
+            Provides a registry for error codes.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Abstractions.IErrorRegistry.Count">
+            <summary>
+            Gets the number of registered error codes.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorRegistry.Register(DotNetErrorKit.Abstractions.IErrorCode)">
+            <summary>
+            Registers a new error code.
+            </summary>
+            <param name="errorCode">The error code to register.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="errorCode"/> is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the error code already exists.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorRegistry.TryRegister(DotNetErrorKit.Abstractions.IErrorCode)">
+            <summary>
+            Attempts to register a new error code.
+            </summary>
+            <param name="errorCode">The error code to register.</param>
+            <returns><c>true</c> when the error code was registered; otherwise, <c>false</c>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="errorCode"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorRegistry.TryGet(System.String,DotNetErrorKit.Abstractions.IErrorCode@)">
+            <summary>
+            Attempts to get a registered error code by value.
+            </summary>
+            <param name="code">The error code value.</param>
+            <param name="errorCode">The resolved error code.</param>
+            <returns><c>true</c> when the code is found; otherwise, <c>false</c>.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="code"/> is null or whitespace.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Abstractions.IErrorReporter">
+            <summary>
+            Reports errors to registered observers.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorReporter.Report(DotNetErrorKit.Abstractions.IError)">
+            <summary>
+            Reports an error to the global error hub.
+            </summary>
+            <param name="errorInfo">The error to report.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="errorInfo"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Abstractions.IErrorReporter.ReportAsync(DotNetErrorKit.Abstractions.IError,System.Threading.CancellationToken)">
+            <summary>
+            Reports an error to asynchronous observers.
+            </summary>
+            <param name="errorInfo">The error to report.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A task that completes when observers finish handling the error.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="errorInfo"/> is null.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.AppError">
+            <summary>
+            Represents an application error with context and severity metadata.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.AppError.From(DotNetErrorKit.Abstractions.IErrorCode,System.String,DotNetErrorKit.Abstractions.IError)">
+            <summary>
+            Creates a new error from the provided error code.
+            </summary>
+            <param name="code">The error code metadata.</param>
+            <param name="message">An optional message override.</param>
+            <param name="innerError">An optional inner error.</param>
+            <returns>The created error.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="code"/> is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="message"/> is invalid.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.AppError.WithContext(System.String,System.String)">
+            <summary>
+            Creates a new error with the specified context entry.
+            </summary>
+            <param name="key">The context key.</param>
+            <param name="value">The context value.</param>
+            <returns>A new error with the context appended.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="key"/> or <paramref name="value"/> are invalid.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.AppError.WithContext(DotNetErrorKit.Abstractions.IErrorContext)">
+            <summary>
+            Creates a new error with the specified context entry.
+            </summary>
+            <param name="context">The context entry to append.</param>
+            <returns>A new error with the context appended.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.AppError.WithMetadata(System.String,System.Object)">
+            <summary>
+            Creates a new error with the specified metadata entry.
+            </summary>
+            <param name="key">The metadata key.</param>
+            <param name="value">The metadata value.</param>
+            <returns>A new error with metadata appended.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="key"/> is invalid.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.AppError.WithMetadata(System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <summary>
+            Creates a new error with the specified metadata entries.
+            </summary>
+            <param name="metadata">The metadata entries to append.</param>
+            <returns>A new error with metadata appended.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="metadata"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.AppError.WithInnerError(DotNetErrorKit.Abstractions.IError)">
+            <summary>
+            Creates a new error with the specified inner error.
+            </summary>
+            <param name="innerError">The inner error.</param>
+            <returns>A new error with the inner error assigned.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="innerError"/> is null.</exception>
+        </member>
+        <member name="P:DotNetErrorKit.AppError.Code">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.AppError.Message">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.AppError.Severity">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.AppError.Context">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.AppError.Metadata">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.AppError.InnerError">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.AppError.Timestamp">
+            <inheritdoc />
+        </member>
+        <member name="T:DotNetErrorKit.Codes.ErrorCategory">
+            <summary>
+            Provides a base type for organizing error codes.
+            </summary>
+        </member>
+        <member name="T:DotNetErrorKit.Codes.ErrorCode">
+            <summary>
+            Defines a strongly typed error code.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Codes.ErrorCode.#ctor(System.String,System.String,DotNetErrorKit.Abstractions.ErrorSeverity,System.String,System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DotNetErrorKit.Codes.ErrorCode"/> class.
+            </summary>
+            <param name="value">The unique error code value.</param>
+            <param name="description">The human-readable error description.</param>
+            <param name="severity">The error severity.</param>
+            <param name="category">The optional error category.</param>
+            <param name="documentationUri">The optional documentation URI.</param>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="value"/> or <paramref name="description"/> are invalid.</exception>
+        </member>
+        <member name="P:DotNetErrorKit.Codes.ErrorCode.Value">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.Codes.ErrorCode.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.Codes.ErrorCode.Severity">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.Codes.ErrorCode.Category">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.Codes.ErrorCode.DocumentationUri">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Codes.ErrorCode.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:DotNetErrorKit.Codes.ErrorCodeRegistry">
+            <summary>
+            Provides a thread-safe registry for error codes.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Codes.ErrorCodeRegistry.Shared">
+            <summary>
+            Gets the shared registry instance.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Codes.ErrorCodeRegistry.Count">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Codes.ErrorCodeRegistry.Register(DotNetErrorKit.Abstractions.IErrorCode)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Codes.ErrorCodeRegistry.TryRegister(DotNetErrorKit.Abstractions.IErrorCode)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Codes.ErrorCodeRegistry.TryGet(System.String,DotNetErrorKit.Abstractions.IErrorCode@)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Codes.ErrorCodeRegistry.TryRegisterAsync(DotNetErrorKit.Abstractions.IErrorCode,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Codes.ErrorCodeRegistry.TryGetAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:DotNetErrorKit.Codes.ErrorRegistryExtensions">
+            <summary>
+            Provides registry extensions for registering error categories.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Codes.ErrorRegistryExtensions.RegisterCategory``1(DotNetErrorKit.Abstractions.IErrorRegistry)">
+            <summary>
+            Registers all error codes defined on the specified category.
+            </summary>
+            <typeparam name="TCategory">The error category type.</typeparam>
+            <param name="registry">The registry to update.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="registry"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Codes.ErrorRegistryExtensions.RegisterCategory(DotNetErrorKit.Abstractions.IErrorRegistry,System.Type)">
+            <summary>
+            Registers all error codes defined on the specified category.
+            </summary>
+            <param name="registry">The registry to update.</param>
+            <param name="categoryType">The category type.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="registry"/> or <paramref name="categoryType"/> are null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="categoryType"/> is not an error category.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Codes.SystemErrorCodes">
+            <summary>
+            Provides default system error codes used by the exception bridge.
+            </summary>
+        </member>
+        <member name="F:DotNetErrorKit.Codes.SystemErrorCodes.UnhandledException">
+            <summary>
+            Represents an unhandled exception captured by the exception bridge.
+            </summary>
+        </member>
+        <member name="T:DotNetErrorKit.ErrorContext">
+            <summary>
+            Represents a key/value context entry attached to an error.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.ErrorContext.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DotNetErrorKit.ErrorContext"/> class.
+            </summary>
+            <param name="key">The context key.</param>
+            <param name="value">The context value.</param>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="key"/> or <paramref name="value"/> are invalid.</exception>
+        </member>
+        <member name="P:DotNetErrorKit.ErrorContext.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.ErrorContext.Value">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.ErrorContext.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:DotNetErrorKit.ErrorException">
+            <summary>
+            Represents an exception that wraps an <see cref="T:DotNetErrorKit.Abstractions.IError"/> instance.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.ErrorException.#ctor(DotNetErrorKit.Abstractions.IError)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DotNetErrorKit.ErrorException"/> class.
+            </summary>
+            <param name="error">The error to wrap.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="error"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.ErrorException.#ctor(DotNetErrorKit.Abstractions.IError,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DotNetErrorKit.ErrorException"/> class.
+            </summary>
+            <param name="error">The error to wrap.</param>
+            <param name="innerException">The inner exception.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="error"/> is null.</exception>
+        </member>
+        <member name="P:DotNetErrorKit.ErrorException.Error">
+            <summary>
+            Gets the wrapped error.
+            </summary>
+        </member>
+        <member name="T:DotNetErrorKit.ErrorKitOptions">
+            <summary>
+            Provides configuration for error kit services.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.ErrorKitOptions.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DotNetErrorKit.ErrorKitOptions"/> class.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.ErrorKitOptions.Registry">
+            <summary>
+            Gets or sets the error registry.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">Thrown when a null registry is assigned.</exception>
+        </member>
+        <member name="P:DotNetErrorKit.ErrorKitOptions.AsyncRegistry">
+            <summary>
+            Gets or sets the asynchronous error registry.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">Thrown when a null registry is assigned.</exception>
+        </member>
+        <member name="P:DotNetErrorKit.ErrorKitOptions.Hub">
+            <summary>
+            Gets or sets the error hub.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">Thrown when a null hub is assigned.</exception>
+        </member>
+        <member name="P:DotNetErrorKit.ErrorKitOptions.Factory">
+            <summary>
+            Gets or sets the error factory.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">Thrown when a null factory is assigned.</exception>
+        </member>
+        <member name="P:DotNetErrorKit.ErrorKitOptions.AsyncFactory">
+            <summary>
+            Gets or sets the asynchronous error factory.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">Thrown when a null factory is assigned.</exception>
+        </member>
+        <member name="P:DotNetErrorKit.ErrorKitOptions.ExceptionBridge">
+            <summary>
+            Gets or sets the exception bridge.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">Thrown when a null bridge is assigned.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Extensions.ServiceCollectionExtensions">
+            <summary>
+            Registers error kit services.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Extensions.ServiceCollectionExtensions.AddErrorKit(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{DotNetErrorKit.ErrorKitOptions})">
+            <summary>
+            Adds error kit services to the service collection.
+            </summary>
+            <param name="services">The service collection.</param>
+            <param name="configure">The optional configuration action.</param>
+            <returns>The service collection.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="services"/> is null.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Internal.DefaultErrorFactory">
+            <summary>
+            Provides the default error factory implementation.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Internal.DefaultErrorFactory.Create(DotNetErrorKit.Abstractions.IErrorCode,System.String,DotNetErrorKit.Abstractions.IError,System.Collections.Generic.IReadOnlyList{DotNetErrorKit.Abstractions.IErrorContext})">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Internal.DefaultErrorFactory.CreateAsync(DotNetErrorKit.Abstractions.IErrorCode,System.String,DotNetErrorKit.Abstractions.IError,System.Collections.Generic.IReadOnlyList{DotNetErrorKit.Abstractions.IErrorContext},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:DotNetErrorKit.Internal.ErrorExceptionBridge">
+            <summary>
+            Provides the default exception bridge implementation.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorExceptionBridge.#ctor(DotNetErrorKit.Abstractions.IErrorCode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DotNetErrorKit.Internal.ErrorExceptionBridge"/> class.
+            </summary>
+            <param name="fallbackCode">The fallback error code used for non-error exceptions.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="fallbackCode"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorExceptionBridge.ToException(DotNetErrorKit.Abstractions.IError)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorExceptionBridge.TryGetError(System.Exception,DotNetErrorKit.Abstractions.IError@)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorExceptionBridge.FromException(System.Exception)">
+            <inheritdoc />
+        </member>
+        <member name="T:DotNetErrorKit.Internal.ErrorHub">
+            <summary>
+            Publishes errors to registered observers.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Internal.ErrorHub.ObserverCount">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetErrorKit.Internal.ErrorHub.AsyncObserverCount">
+            <summary>
+            Gets the count of registered asynchronous observers.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorHub.RegisterObserver(DotNetErrorKit.Abstractions.IErrorObserver)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorHub.RegisterAsyncObserver(DotNetErrorKit.Abstractions.IAsyncErrorObserver)">
+            <summary>
+            Registers an asynchronous observer.
+            </summary>
+            <param name="observer">The asynchronous observer to register.</param>
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorHub.UnregisterObserver(DotNetErrorKit.Abstractions.IErrorObserver)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorHub.UnregisterAsyncObserver(DotNetErrorKit.Abstractions.IAsyncErrorObserver)">
+            <summary>
+            Unregisters an asynchronous observer.
+            </summary>
+            <param name="observer">The asynchronous observer to unregister.</param>
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorHub.Publish(DotNetErrorKit.Abstractions.IError)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorHub.PublishAsync(DotNetErrorKit.Abstractions.IError,System.Threading.CancellationToken)">
+            <summary>
+            Publishes an error asynchronously to registered asynchronous observers.
+            </summary>
+            <param name="errorInfo">The error information to publish.</param>
+            <param name="cancellationToken">Optional. A token to monitor for cancellation requests.</param>
+            <returns>A task that represents the asynchronous publish operation.</returns>
+        </member>
+        <member name="T:DotNetErrorKit.Internal.ErrorReporter">
+            <summary>
+            Reports errors via the configured error hub.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorReporter.#ctor(DotNetErrorKit.Abstractions.IErrorHub)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DotNetErrorKit.Internal.ErrorReporter"/> class.
+            </summary>
+            <param name="hub">The error hub.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="hub"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorReporter.Report(DotNetErrorKit.Abstractions.IError)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Internal.ErrorReporter.ReportAsync(DotNetErrorKit.Abstractions.IError,System.Threading.CancellationToken)">
+            <summary>
+            Reports the error asynchronously via the configured error hub.
+            </summary>
+            <param name="errorInfo">The error information.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A task that represents the asynchronous report operation.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="errorInfo"/> is null.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.ProblemDetails.ErrorProblemDetails">
+            <summary>
+            Represents RFC 7807 Problem Details generated from an error.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.ProblemDetails.ErrorProblemDetails.#ctor(System.String,System.String,System.Nullable{System.Int32},System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Initializes a new instance of the <see cref="T:DotNetErrorKit.ProblemDetails.ErrorProblemDetails"/> class.
+            </summary>
+            <param name="type">The Problem Details type.</param>
+            <param name="title">The Problem Details title.</param>
+            <param name="status">The HTTP status code.</param>
+            <param name="detail">The Problem Details detail message.</param>
+            <param name="instance">The Problem Details instance.</param>
+            <param name="extensions">The extensions collection.</param>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="type"/>, <paramref name="title"/>, or <paramref name="detail"/> are invalid.</exception>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="extensions"/> is null.</exception>
+        </member>
+        <member name="P:DotNetErrorKit.ProblemDetails.ErrorProblemDetails.Type">
+            <summary>
+            Gets the Problem Details type.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.ProblemDetails.ErrorProblemDetails.Title">
+            <summary>
+            Gets the Problem Details title.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.ProblemDetails.ErrorProblemDetails.Status">
+            <summary>
+            Gets the HTTP status code.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.ProblemDetails.ErrorProblemDetails.Detail">
+            <summary>
+            Gets the Problem Details detail message.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.ProblemDetails.ErrorProblemDetails.Instance">
+            <summary>
+            Gets the Problem Details instance.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.ProblemDetails.ErrorProblemDetails.Extensions">
+            <summary>
+            Gets the extensions collection.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.ProblemDetails.ErrorProblemDetails.FromError(DotNetErrorKit.Abstractions.IError,System.Nullable{System.Int32},System.Uri,System.String)">
+            <summary>
+            Creates a Problem Details payload from an error.
+            </summary>
+            <param name="error">The source error.</param>
+            <param name="status">The optional HTTP status code.</param>
+            <param name="type">The optional Problem Details type URI.</param>
+            <param name="instance">The optional Problem Details instance.</param>
+            <returns>The created Problem Details payload.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="error"/> is null.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.ProblemDetails.ErrorProblemDetailsJson">
+            <summary>
+            Provides JSON serialization helpers for <see cref="T:DotNetErrorKit.ProblemDetails.ErrorProblemDetails"/>.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.ProblemDetails.ErrorProblemDetailsJson.Serialize(DotNetErrorKit.ProblemDetails.ErrorProblemDetails,System.Text.Json.JsonSerializerOptions)">
+            <summary>
+            Serializes the specified Problem Details payload to JSON.
+            </summary>
+            <param name="details">The Problem Details payload.</param>
+            <param name="options">Optional JSON serializer options.</param>
+            <returns>The serialized JSON string.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="details"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.ProblemDetails.ErrorProblemDetailsJson.Deserialize(System.String,System.Text.Json.JsonSerializerOptions)">
+            <summary>
+            Deserializes a JSON payload into <see cref="T:DotNetErrorKit.ProblemDetails.ErrorProblemDetails"/>.
+            </summary>
+            <param name="json">The JSON payload.</param>
+            <param name="options">Optional JSON serializer options.</param>
+            <returns>The deserialized Problem Details payload.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="json"/> is null or whitespace.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.ProblemDetails.ErrorProblemDetailsJson.Write(System.Text.Json.Utf8JsonWriter,DotNetErrorKit.ProblemDetails.ErrorProblemDetails,System.Text.Json.JsonSerializerOptions)">
+            <summary>
+            Writes the specified Problem Details payload to a JSON writer.
+            </summary>
+            <param name="writer">The JSON writer.</param>
+            <param name="details">The Problem Details payload.</param>
+            <param name="options">Optional JSON serializer options.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="writer"/> or <paramref name="details"/> are null.</exception>
+        </member>
+        <member name="T:DotNetErrorKit.Results.Result">
+            <summary>
+            Represents the outcome of an operation without a return value.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Results.Result.IsSuccess">
+            <summary>
+            Gets a value indicating whether the result represents success.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Results.Result.IsFailure">
+            <summary>
+            Gets a value indicating whether the result represents failure.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Results.Result.Error">
+            <summary>
+            Gets the error for a failed result, if any.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result.Success">
+            <summary>
+            Creates a successful result.
+            </summary>
+            <returns>A successful result.</returns>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result.Failure(DotNetErrorKit.Abstractions.IError)">
+            <summary>
+            Creates a failed result.
+            </summary>
+            <param name="error">The error to attach.</param>
+            <returns>A failed result.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="error"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result.ThrowIfFailure">
+            <summary>
+            Throws an <see cref="T:DotNetErrorKit.ErrorException"/> when the result represents failure.
+            </summary>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result.op_Implicit(DotNetErrorKit.AppError)~DotNetErrorKit.Results.Result">
+            <summary>
+            Converts an error into a failed result.
+            </summary>
+            <param name="error">The error to convert.</param>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result.op_Implicit(DotNetErrorKit.ErrorException)~DotNetErrorKit.Results.Result">
+            <summary>
+            Converts an error exception into a failed result.
+            </summary>
+            <param name="exception">The exception to convert.</param>
+        </member>
+        <member name="T:DotNetErrorKit.Results.Result`1">
+            <summary>
+            Represents the outcome of an operation that returns a value.
+            </summary>
+            <typeparam name="T">The result value type.</typeparam>
+        </member>
+        <member name="P:DotNetErrorKit.Results.Result`1.IsSuccess">
+            <summary>
+            Gets a value indicating whether the result represents success.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Results.Result`1.IsFailure">
+            <summary>
+            Gets a value indicating whether the result represents failure.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Results.Result`1.Error">
+            <summary>
+            Gets the error for a failed result, if any.
+            </summary>
+        </member>
+        <member name="P:DotNetErrorKit.Results.Result`1.Value">
+            <summary>
+            Gets the value for a successful result.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown when the result represents failure.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result`1.Success(`0)">
+            <summary>
+            Creates a successful result.
+            </summary>
+            <param name="value">The value to wrap.</param>
+            <returns>A successful result.</returns>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result`1.Failure(DotNetErrorKit.Abstractions.IError)">
+            <summary>
+            Creates a failed result.
+            </summary>
+            <param name="error">The error to attach.</param>
+            <returns>A failed result.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="error"/> is null.</exception>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result`1.TryGetValue(`0@)">
+            <summary>
+            Attempts to get the value for a successful result.
+            </summary>
+            <param name="value">The resulting value.</param>
+            <returns><c>true</c> when successful; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result`1.ToResult">
+            <summary>
+            Converts the result into a non-generic <see cref="T:DotNetErrorKit.Results.Result"/>.
+            </summary>
+            <returns>A non-generic result.</returns>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result`1.op_Implicit(`0)~DotNetErrorKit.Results.Result{`0}">
+            <summary>
+            Converts a value into a successful result.
+            </summary>
+            <param name="value">The value to convert.</param>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result`1.op_Implicit(DotNetErrorKit.AppError)~DotNetErrorKit.Results.Result{`0}">
+            <summary>
+            Converts an application error into a failed result.
+            </summary>
+            <param name="error">The error to convert.</param>
+        </member>
+        <member name="M:DotNetErrorKit.Results.Result`1.op_Implicit(DotNetErrorKit.ErrorException)~DotNetErrorKit.Results.Result{`0}">
+            <summary>
+            Converts an error exception into a failed result.
+            </summary>
+            <param name="exception">The exception to convert.</param>
+        </member>
+    </members>
+</doc>
